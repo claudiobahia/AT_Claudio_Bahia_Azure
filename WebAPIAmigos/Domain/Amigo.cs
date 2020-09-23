@@ -1,10 +1,9 @@
-﻿using Domain._Mundo;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Domain.Amigos
+namespace WebAPIAmigos.Domain
 {
     public class Amigo
     {
@@ -18,6 +17,5 @@ namespace Domain.Amigos
         public List<Amigo> amigos { get; set; } = new List<Amigo>();
         public Pais pais { get; set; }
         public Estado estado { get; set; }
-
     }
 }
