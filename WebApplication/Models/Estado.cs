@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAPIPaises.Domain
+namespace WebApplication.Models
 {
-    public class Pais
+    public class Estado
     {
         public int Id { get; set; }
         public int Foto { get; set; }
         public string Nome { get; set; }
-        public List<Estado> Estados { get; set; }
+        public int PaisId { get; set; }
+        public Pais Pais { get; set; }
     }
 }
