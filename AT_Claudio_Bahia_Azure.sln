@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPIAmigos", "WebAPIAmigo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPIPaises", "WebAPIPaises\WebAPIPaises.csproj", "{6203D477-0A94-4400-98DC-60C5BA62286C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{74B85D28-7247-4189-A0F4-B5028F0945A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6203D477-0A94-4400-98DC-60C5BA62286C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6203D477-0A94-4400-98DC-60C5BA62286C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6203D477-0A94-4400-98DC-60C5BA62286C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74B85D28-7247-4189-A0F4-B5028F0945A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74B85D28-7247-4189-A0F4-B5028F0945A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74B85D28-7247-4189-A0F4-B5028F0945A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74B85D28-7247-4189-A0F4-B5028F0945A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,15 +7,15 @@ namespace WebAPIAmigos.Domain
 {
     public class Amigo
     {
-        public int id { get; set; }
-        public string foto { get; set; }
-        public string nome { get; set; }
-        public string sobrenome { get; set; }
-        public string email { get; set; }
-        public string telefone { get; set; }
-        public string dataaniversario { get; set; }
-        public List<Amigo> amigos { get; set; } = new List<Amigo>();
-        public Pais pais { get; set; }
-        public Estado estado { get; set; }
+        public int Id { get; set; }
+        public string Foto { get; set; }
+        public string Nome { get; set; }
+        public string Sobrenome { get; set; }
+        public string Email { get; set; }
+        public string Telefone { get; set; }
+        public string Dataaniversario { get; set; }
+        public List<Amizade> Amizades { get; set; }
+        public Pais Pais { get; set; }
+        public Estado Estado { get; set; }
     }
 }
