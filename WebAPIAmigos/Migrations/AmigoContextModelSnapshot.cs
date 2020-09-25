@@ -19,22 +19,20 @@ namespace WebAPIAmigos.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebAPIAmigos.Domain.Amigo", b =>
+            modelBuilder.Entity("WebAPIAmigos.Model.Amigo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Dataaniversario")
-                        .IsRequired()
+                    b.Property<string>("DataAniversario")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EstadoId")
+                    b.Property<int>("EstadoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Foto")
@@ -45,7 +43,7 @@ namespace WebAPIAmigos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PaisId")
+                    b.Property<int>("PaisId")
                         .HasColumnType("int");
 
                     b.Property<string>("Sobrenome")
@@ -65,7 +63,7 @@ namespace WebAPIAmigos.Migrations
                     b.ToTable("Amigo");
                 });
 
-            modelBuilder.Entity("WebAPIAmigos.Domain.Amizade", b =>
+            modelBuilder.Entity("WebAPIAmigos.Model.Amizade", b =>
                 {
                     b.Property<int>("PessoaId")
                         .HasColumnType("int");
@@ -80,7 +78,7 @@ namespace WebAPIAmigos.Migrations
                     b.ToTable("Amizade");
                 });
 
-            modelBuilder.Entity("WebAPIAmigos.Domain.Estado", b =>
+            modelBuilder.Entity("WebAPIAmigos.Model.Estado", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,7 +101,7 @@ namespace WebAPIAmigos.Migrations
                     b.ToTable("Estado");
                 });
 
-            modelBuilder.Entity("WebAPIAmigos.Domain.Pais", b =>
+            modelBuilder.Entity("WebAPIAmigos.Model.Pais", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,30 +119,34 @@ namespace WebAPIAmigos.Migrations
                     b.ToTable("Pais");
                 });
 
-            modelBuilder.Entity("WebAPIAmigos.Domain.Amigo", b =>
+            modelBuilder.Entity("WebAPIAmigos.Model.Amigo", b =>
                 {
-                    b.HasOne("WebAPIAmigos.Domain.Estado", "Estado")
+                    b.HasOne("WebAPIAmigos.Model.Estado", "Estado")
                         .WithMany()
-                        .HasForeignKey("EstadoId");
+                        .HasForeignKey("EstadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("WebAPIAmigos.Domain.Pais", "Pais")
+                    b.HasOne("WebAPIAmigos.Model.Pais", "Pais")
                         .WithMany()
-                        .HasForeignKey("PaisId");
+                        .HasForeignKey("PaisId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("WebAPIAmigos.Domain.Amizade", b =>
+            modelBuilder.Entity("WebAPIAmigos.Model.Amizade", b =>
                 {
-                    b.HasOne("WebAPIAmigos.Domain.Amigo", "PessoaEamigo")
+                    b.HasOne("WebAPIAmigos.Model.Amigo", "PessoaEamigo")
                         .WithMany("Amizades")
                         .HasForeignKey("AmigoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebAPIAmigos.Domain.Estado", b =>
+            modelBuilder.Entity("WebAPIAmigos.Model.Estado", b =>
                 {
-                    b.HasOne("WebAPIAmigos.Domain.Pais", null)
-                        .WithMany("Estados")
+                    b.HasOne("WebAPIAmigos.Model.Pais", null)
+                        .WithMany("Estado")
                         .HasForeignKey("PaisId");
                 });
 #pragma warning restore 612, 618

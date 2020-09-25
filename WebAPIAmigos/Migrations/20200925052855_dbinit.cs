@@ -2,7 +2,7 @@
 
 namespace WebAPIAmigos.Migrations
 {
-    public partial class DbInitAmigos : Migration
+    public partial class dbinit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,11 +50,11 @@ namespace WebAPIAmigos.Migrations
                     Foto = table.Column<string>(nullable: false),
                     Nome = table.Column<string>(nullable: false),
                     Sobrenome = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
                     Telefone = table.Column<string>(nullable: false),
-                    Dataaniversario = table.Column<string>(nullable: false),
-                    PaisId = table.Column<int>(nullable: true),
-                    EstadoId = table.Column<int>(nullable: true)
+                    DataAniversario = table.Column<string>(nullable: true),
+                    PaisId = table.Column<int>(nullable: false),
+                    EstadoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,13 +64,13 @@ namespace WebAPIAmigos.Migrations
                         column: x => x.EstadoId,
                         principalTable: "Estado",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Amigo_Pais_PaisId",
                         column: x => x.PaisId,
                         principalTable: "Pais",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

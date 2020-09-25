@@ -27,10 +27,12 @@ namespace WebAPIPaises
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PaisContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionStrings"))
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            services.AddControllers();
+            services.AddDbContext<PaisContext>(
+                options => options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=PaisDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

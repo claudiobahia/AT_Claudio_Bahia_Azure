@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebAPIAmigos.Domain;
+using WebAPIAmigos.Model;
 using WebAPIAmigos.Repository;
 
 namespace WebAPIAmigos.Controllers
@@ -25,14 +24,27 @@ namespace WebAPIAmigos.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Amigo>>> GetAmigos()
         {
-            return await _context.Amigos.ToListAsync();
+            return await _context.Amigos.Include(x => x.Pais).Include(x => x.Estado).ToListAsync();
         }
 
         // GET: api/Amigo/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Amigo>> GetAmigo(int id)
         {
-            var amigo = await _context.Amigos.FindAsync(id);
+            var amigo = await _context.Amigos.Include(x => x.Pais).Include(x => x.Estado).FirstOrDefaultAsync(x => x.Id == id);
+
+            if (amigo == null)
+            {
+                return NotFound();
+            }
+
+            return amigo;
+        }
+
+        [HttpGet("pessoa/{id}")]
+        public async Task<ActionResult<IEnumerable<Amigo>>> GetPessoas(int id)
+        {
+            var amigo = await _context.Amigos.Include(x => x.Pais).Include(x => x.Estado).Where(x => x.Id != id).ToListAsync();
 
             if (amigo == null)
             {

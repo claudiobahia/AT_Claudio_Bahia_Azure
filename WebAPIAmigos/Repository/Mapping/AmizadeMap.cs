@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebAPIAmigos.Domain;
+using WebAPIAmigos.Model;
 
 namespace WebAPIAmigos.Repository.Mapping
 {
@@ -13,16 +13,9 @@ namespace WebAPIAmigos.Repository.Mapping
         public void Configure(EntityTypeBuilder<Amizade> builder)
         {
             builder.ToTable("Amizade");
-            builder.HasKey(x=> new { x.PessoaId, x.AmigoId });
-            builder.HasOne(x => x.PessoaEamigo)
-                .WithMany(x => x.Amizades)
-                .HasForeignKey(x => x.PessoaId)
-                .OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(x => x.PessoaEamigo)
-                .WithMany(x => x.Amizades)
-                .HasForeignKey(x => x.AmigoId)
-                .OnDelete(DeleteBehavior.Cascade);
-
+            builder.HasKey(x => new { x.PessoaId, x.AmigoId });
+            builder.HasOne(x => x.PessoaEamigo).WithMany(x => x.Amizades).HasForeignKey(x => x.PessoaId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.PessoaEamigo).WithMany(x => x.Amizades).HasForeignKey(x => x.AmigoId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

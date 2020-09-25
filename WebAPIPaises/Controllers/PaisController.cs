@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebAPIPaises.Domain;
+using WebAPIPaises.Model;
 using WebAPIPaises.Repository;
 
 namespace WebAPIPaises.Controllers
@@ -25,14 +25,14 @@ namespace WebAPIPaises.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pais>>> GetPaises()
         {
-            return await _context.Paises.ToListAsync();
+            return await _context.Paises.Include(x => x.Estados).ToListAsync();
         }
 
         // GET: api/Pais/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Pais>> GetPais(int id)
         {
-            var pais = await _context.Paises.FindAsync(id);
+            var pais = await _context.Paises.Include(x => x.Estados).FirstOrDefaultAsync(x => x.Id == id);
 
             if (pais == null)
             {

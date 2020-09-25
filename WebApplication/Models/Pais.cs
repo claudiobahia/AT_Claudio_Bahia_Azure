@@ -9,7 +9,7 @@ namespace WebApplication.Models
     public class Pais
     {
         public int Id { get; set; }
-        public int Foto { get; set; }
+        public string Foto { get; set; }
         public string Nome { get; set; }
         public List<Estado> Estados { get; set; }
     }

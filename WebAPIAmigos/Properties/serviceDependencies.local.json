@@ -8,11 +8,6 @@
     },
     "secrets2": {
       "type": "secrets.user"
-    },
-    "mssql1": {
-      "type": "mssql.local",
-      "connectionId": "ConnectionStrings",
-      "secretStore": "LocalSecretsFile"
     }
   }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAPIAmigos.Domain
+namespace Repository.Domain
 {
     public class Amigo
     {
@@ -16,6 +16,8 @@ namespace WebAPIAmigos.Domain
         public string Dataaniversario { get; set; }
         public List<Amizade> Amizades { get; set; }
         public Pais Pais { get; set; }
+        public int PaisId { get; set; }
         public Estado Estado { get; set; }
+        public int EstadoId { get; set; }
     }
 }

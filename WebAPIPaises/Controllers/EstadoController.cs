@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebAPIPaises.Domain;
+using WebAPIPaises.Model;
 using WebAPIPaises.Repository;
 
 namespace WebAPIPaises.Controllers
@@ -25,14 +25,14 @@ namespace WebAPIPaises.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Estado>>> GetEstado()
         {
-            return await _context.Estado.ToListAsync();
+            return await _context.Estados.ToListAsync();
         }
 
         // GET: api/Estado/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Estado>> GetEstado(int id)
         {
-            var estado = await _context.Estado.FindAsync(id);
+            var estado = await _context.Estados.FindAsync(id);
 
             if (estado == null)
             {
@@ -80,7 +80,7 @@ namespace WebAPIPaises.Controllers
         [HttpPost]
         public async Task<ActionResult<Estado>> PostEstado(Estado estado)
         {
-            _context.Estado.Add(estado);
+            _context.Estados.Add(estado);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEstado", new { id = estado.Id }, estado);
@@ -90,13 +90,13 @@ namespace WebAPIPaises.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Estado>> DeleteEstado(int id)
         {
-            var estado = await _context.Estado.FindAsync(id);
+            var estado = await _context.Estados.FindAsync(id);
             if (estado == null)
             {
                 return NotFound();
             }
 
-            _context.Estado.Remove(estado);
+            _context.Estados.Remove(estado);
             await _context.SaveChangesAsync();
 
             return estado;
@@ -104,7 +104,7 @@ namespace WebAPIPaises.Controllers
 
         private bool EstadoExists(int id)
         {
-            return _context.Estado.Any(e => e.Id == id);
+            return _context.Estados.Any(e => e.Id == id);
         }
     }
 }
