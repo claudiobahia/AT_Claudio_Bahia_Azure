@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication.Models.Amigo>
+﻿@model IEnumerable<Repository.Domain.Amigo>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,11 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Foto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th><th>
+    @Html.DisplayNameFor(model => model.Nome)
+</th>
             <th>
                 @Html.DisplayNameFor(model => model.Sobrenome)
             </th>
@@ -43,7 +42,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Foto)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)

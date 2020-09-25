@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebAPIPaises.Model;
-using WebAPIPaises.Repository;
+using Repository;
+using Repository.Domain;
 
 namespace WebAPIPaises.Controllers
 {
@@ -14,9 +14,9 @@ namespace WebAPIPaises.Controllers
     [ApiController]
     public class PaisController : ControllerBase
     {
-        private readonly PaisContext _context;
+        private readonly ApplicationContext _context;
 
-        public PaisController(PaisContext context)
+        public PaisController(ApplicationContext context)
         {
             _context = context;
         }

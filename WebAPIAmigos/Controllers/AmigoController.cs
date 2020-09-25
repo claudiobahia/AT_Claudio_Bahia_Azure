@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebAPIAmigos.Model;
-using WebAPIAmigos.Repository;
+using Repository;
+using Repository.Domain;
 
 namespace WebAPIAmigos.Controllers
 {
@@ -13,9 +13,9 @@ namespace WebAPIAmigos.Controllers
     [ApiController]
     public class AmigoController : ControllerBase
     {
-        private readonly AmigoContext _context;
+        private readonly ApplicationContext _context;
 
-        public AmigoController(AmigoContext context)
+        public AmigoController(ApplicationContext context)
         {
             _context = context;
         }
@@ -24,14 +24,14 @@ namespace WebAPIAmigos.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Amigo>>> GetAmigos()
         {
-            return await _context.Amigos.Include(x => x.Pais).Include(x => x.Estado).ToListAsync();
+            return await _context.Amigos.Include(x => x.Pais).Include(x => x.Estado).Include(x => x.Amizades).ToListAsync();
         }
 
         // GET: api/Amigo/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Amigo>> GetAmigo(int id)
         {
-            var amigo = await _context.Amigos.Include(x => x.Pais).Include(x => x.Estado).FirstOrDefaultAsync(x => x.Id == id);
+            var amigo = await _context.Amigos.Include(x => x.Pais).Include(x => x.Estado).Include(x => x.Amizades).FirstOrDefaultAsync(x => x.Id == id);
 
             if (amigo == null)
             {
@@ -42,9 +42,9 @@ namespace WebAPIAmigos.Controllers
         }
 
         [HttpGet("pessoa/{id}")]
-        public async Task<ActionResult<IEnumerable<Amigo>>> GetPessoas(int id)
+        public async Task<ActionResult<IEnumerable<Amigo>>> GetAmigos(int id)
         {
-            var amigo = await _context.Amigos.Include(x => x.Pais).Include(x => x.Estado).Where(x => x.Id != id).ToListAsync();
+            var amigo = await _context.Amigos.Include(x => x.Pais).Include(x => x.Estado).Include(x => x.Amizades).Where(x => x.Id != id).ToListAsync();
 
             if (amigo == null)
             {

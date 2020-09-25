@@ -23,8 +23,10 @@ namespace Repository.Mapping
             builder.Property(x => x.Dataaniversario).IsRequired();
             builder.Property(x => x.PaisId).IsRequired();
             builder.Property(x => x.EstadoId).IsRequired();
-            builder.HasOne(x => x.Pais);
-            builder.HasOne(x => x.Estado);
+
+            builder.HasOne(x => x.Pais).WithMany().HasForeignKey(x => x.PaisId).OnDelete(DeleteBehavior.NoAction) ;
+            builder.HasOne(x => x.Estado).WithMany().HasForeignKey(x => x.EstadoId).OnDelete(DeleteBehavior.NoAction);
+
             builder.HasMany(x => x.Amizades).WithOne(x => x.PessoaEamigo).HasForeignKey(x => x.PessoaId);
             builder.HasMany(x => x.Amizades).WithOne(x => x.PessoaEamigo).HasForeignKey(x => x.AmigoId);
         }

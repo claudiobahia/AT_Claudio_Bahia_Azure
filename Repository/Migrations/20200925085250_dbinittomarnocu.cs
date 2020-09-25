@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebAPIAmigos.Migrations
+namespace Repository.Migrations
 {
-    public partial class dbinit : Migration
+    public partial class dbinittomarnocu : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,8 @@ namespace WebAPIAmigos.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true),
-                    Foto = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(nullable: false),
+                    Foto = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,9 +26,9 @@ namespace WebAPIAmigos.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true),
-                    Foto = table.Column<string>(nullable: true),
-                    PaisId = table.Column<int>(nullable: true)
+                    Nome = table.Column<string>(nullable: false),
+                    Foto = table.Column<string>(nullable: false),
+                    PaisId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,7 +38,7 @@ namespace WebAPIAmigos.Migrations
                         column: x => x.PaisId,
                         principalTable: "Pais",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,9 +50,9 @@ namespace WebAPIAmigos.Migrations
                     Foto = table.Column<string>(nullable: false),
                     Nome = table.Column<string>(nullable: false),
                     Sobrenome = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: false),
                     Telefone = table.Column<string>(nullable: false),
-                    DataAniversario = table.Column<string>(nullable: true),
+                    Dataaniversario = table.Column<string>(nullable: false),
                     PaisId = table.Column<int>(nullable: false),
                     EstadoId = table.Column<int>(nullable: false)
                 },
@@ -63,14 +63,12 @@ namespace WebAPIAmigos.Migrations
                         name: "FK_Amigo_Estado_EstadoId",
                         column: x => x.EstadoId,
                         principalTable: "Estado",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Amigo_Pais_PaisId",
                         column: x => x.PaisId,
                         principalTable: "Pais",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -87,8 +85,7 @@ namespace WebAPIAmigos.Migrations
                         name: "FK_Amizade_Amigo_AmigoId",
                         column: x => x.AmigoId,
                         principalTable: "Amigo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

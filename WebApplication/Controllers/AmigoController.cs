@@ -9,7 +9,7 @@ using WebApplication.Models;
 
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
-
+using Repository.Domain;
 
 namespace WebApplication.Controllers
 {
@@ -37,17 +37,18 @@ namespace WebApplication.Controllers
             var persons = client.Get<List<Amigo>>(request2);
             ViewData["pessoa"] = persons.Data;
 
-            var request3 = new RestRequest(_linkApi + "amizade/" + id);
-            var friends = client.Get<List<Amizade>>(request3);
-            ViewData["amigo"] = friends.Data;
+            var request3 = new RestRequest(_linkApi + "amizade/" + id,DataFormat.Json);
+            var amigos = client.Get<List<Amizade>>(request3);
+            ViewData["amigo"] = amigos.Data;
 
-            var friendIds = new List<int>();
-            foreach (var data in friends.Data)
+            var amigosIds = new List<int>();
+            foreach (var data in amigos.Data)
             {
-                friendIds.Add(data.AmigoId);
+                amigosIds.Add(data.AmigoId);
             }
+            if (amigosIds.Count == 0) amigosIds = new List<int>();
 
-            ViewData["AmigosIds"] = friendIds;
+            ViewData["AmigosIds"] = amigosIds;
 
             return View(response.Data);
         }
@@ -167,22 +168,50 @@ namespace WebApplication.Controllers
                 return View();
             }
         }
-
-        public ActionResult AddAmizade(int PessoaId, int AmigoId)
+        public ActionResult Amizade()
         {
-            var client = new RestClient();
-            var request = new RestRequest(_linkApi + "FriendShips");
-            var model = new Amizade { PessoaId = PessoaId, AmigoId = AmigoId };
-            request.AddJsonBody(model);
-            var _ = client.Post<Amizade>(request);
+            return View();
+        }
 
-            return RedirectToAction("Details", "amigo", new { id = PessoaId });
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Amizade(int pessoaId, int amigoId)
+        {
+            try
+            {
+                var client = new RestClient();
+                var request = new RestRequest(_linkApi + "amizade", DataFormat.Json);
+                AmizadeWeb model = new AmizadeWeb(pessoaId,amigoId);
+                request.AddJsonBody(model);
+                var response = client.Post<AmizadeWeb>(request);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                ModelState.AddModelError(string.Empty, "An error occured, please try again later!");
+                return View();
+            }
+
+        }
+
+        public class AmizadeWeb
+        {
+            public int PessoaId { get; set; }
+            public int AmigoId { get; set; }
+
+            public AmizadeWeb(int wPessoaId, int wAmigoId)
+            {
+                PessoaId = wPessoaId;
+                AmigoId = wAmigoId;
+            }
         }
 
         public ActionResult DeleteAmizade(int PessoaId, int AmigoId)
         {
             var client = new RestClient();
-            var request = new RestRequest(_linkApi + "FriendShips/" + PessoaId + "/" + AmigoId);
+            var request = new RestRequest(_linkApi + "amizade/" + PessoaId + "/" + AmigoId);
             _ = new Amizade { PessoaId = PessoaId, AmigoId = AmigoId };
             _ = client.Delete<Amizade>(request);
 

@@ -6,7 +6,7 @@ namespace Repository
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<Estado> Estado { get; set; }
+        public DbSet<Estado> Estados { get; set; }
         public DbSet<Pais> Paises { get; set; }
         public DbSet<Amigo> Amigos { get; set; }
         public DbSet<Amizade> Amizade { get; set; }

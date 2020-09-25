@@ -16,11 +16,11 @@ namespace Repository.Mapping
             builder.HasOne(x => x.PessoaEamigo)
                 .WithMany(x => x.Amizades)
                 .HasForeignKey(x => x.PessoaId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.PessoaEamigo)
                 .WithMany(x => x.Amizades)
                 .HasForeignKey(x => x.AmigoId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

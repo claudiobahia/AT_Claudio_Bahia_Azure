@@ -1,7 +1,8 @@
-﻿@model WebApplication.Models.Amigo
+﻿@model Repository.Domain.Amigo
 
 @{
     ViewData["Title"] = "Details";
+    var Amigos = ViewData["Amigos"] as List<Repository.Domain.Amizade>;
 }
 
 <h1>Details</h1>
@@ -10,52 +11,52 @@
     <h4>Amigo</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Foto)
         </dt>
         <dd class="col-sm-10">
             <img src="@Model.Foto" />
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nome)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Sobrenome)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Sobrenome)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Telefone)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Telefone)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Dataaniversario)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Dataaniversario)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Pais)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Pais.Id)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Estado)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Estado.Id)
         </dd>
     </dl>
@@ -63,4 +64,39 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
+</div>
+<div>
+    <h1>Amigos</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sobrenome)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Amigos != null) { 
+                @foreach (var item in Amigos)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PessoaEamigo.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PessoaEamigo.Sobrenome)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Deletar Amigo", "DeleteAmizade", new { PessoaId = item.PessoaId, AmigoId = item.AmigoId })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
 </div>

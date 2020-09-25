@@ -18,7 +18,7 @@ namespace Repository.Mapping
             builder.Property(x => x.Foto).IsRequired();
             builder.Property(x => x.Nome).IsRequired();
 
-            builder.HasMany(x => x.Estados);
+            builder.HasMany(x => x.Estados).WithOne(x => x.Pais).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

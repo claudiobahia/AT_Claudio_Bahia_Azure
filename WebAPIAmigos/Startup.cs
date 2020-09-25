@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using WebAPIAmigos.Repository;
+using Repository;
 
 namespace WebAPIAmigos
 {
@@ -30,8 +30,8 @@ namespace WebAPIAmigos
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            services.AddDbContext<AmigoContext>(
-                options => options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AmigosDbAt;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
+            services.AddDbContext<ApplicationContext>(
+                options => options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AmigoAT;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
             );
         }
 

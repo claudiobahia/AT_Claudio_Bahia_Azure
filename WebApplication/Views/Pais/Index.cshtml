@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication.Models.Pais>
+﻿@model IEnumerable<Repository.Domain.Pais>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,9 +16,6 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Foto)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th></th>
@@ -29,9 +26,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Foto)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)

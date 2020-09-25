@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebAPIAmigos.Model;
-using WebAPIAmigos.Repository;
+using Repository;
+using Repository.Domain;
 
 namespace WebAPIAmigos.Controllers
 {
@@ -14,9 +14,9 @@ namespace WebAPIAmigos.Controllers
     [ApiController]
     public class AmizadeController : ControllerBase
     {
-        private readonly AmigoContext _context;
+        private readonly ApplicationContext _context;
 
-        public AmizadeController(AmigoContext context)
+        public AmizadeController(ApplicationContext context)
         {
             _context = context;
         }
@@ -25,39 +25,16 @@ namespace WebAPIAmigos.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Amizade>>> GetAmizade()
         {
-            return await _context.Amizade.Include(x => x.PessoaEamigo).ToListAsync();
+            return await _context.Amizade.Include(x => x.PessoaEamigo).Include(x => x.PessoaEamigo.Pais).Include(x => x.PessoaEamigo.Estado).ToListAsync();
         }
 
         // GET: api/Amizade/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Amizade>>> GetAmizade(int id)
+        public async Task<ActionResult<IEnumerable<Amizade>>> GetTodosAmigos(int id)
         {
-            var amizade = await _context.Amizade.Where(x => x.PessoaId == id).ToListAsync();
-
-            if (amizade == null)
-            {
-                return NotFound();
-            }
-
-            List<Amizade> amizades = new List<Amizade>();
-
-            foreach (Amizade u in amizade)
-            {
-                try
-                {
-                    Amigo amigo = await _context.Amigos.Include(x => x.Pais).Include(x => x.Estado).FirstOrDefaultAsync(x => x.Id == u.AmigoId);
-                    amizades.Add(new Amizade
-                    {
-                        PessoaId = u.PessoaId,
-                        AmigoId = u.AmigoId,
-                        PessoaEamigo = amigo
-                    });
-                }
-                catch (Exception _) { }
-            }
-
-            return amizades;
+            return Ok(await _context.Amizade.Include(x => x.PessoaEamigo.Estado).Include(x => x.PessoaEamigo.Pais).Where(x => x.PessoaId != id).ToListAsync());
         }
+    
 
         // PUT: api/Amizade/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -99,27 +76,28 @@ namespace WebAPIAmigos.Controllers
         {
             var amizade2 = new Amizade
             {
-                PessoaId = amizade.PessoaId,
+                PessoaId = amizade.AmigoId,
                 PessoaEamigo = amizade.PessoaEamigo,
-                AmigoId = amizade.AmigoId
+                AmigoId = amizade.PessoaId
             };
 
             _context.Amizade.Add(amizade);
-            _context.Amizade.Add(amizade2); 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
+            var person = _context.Amigos.Find(amizade.PessoaId);
+            person.Amizades ??= new List<Amizade>();
+            person.Amizades.Add(amizade);
+
+            _context.Amizade.Add(amizade2);
+            var friend = _context.Amigos.Find(amizade.AmigoId);
+            friend.Amizades ??= new List<Amizade>();
+            friend.Amizades.Add(amizade2);
+            try {await _context.SaveChangesAsync();}
             catch (DbUpdateException)
             {
                 if (AmizadeExists(amizade.PessoaId))
                 {
                     return Conflict();
                 }
-                else
-                {
-                    throw;
-                }
+                else {throw;}
             }
 
             return CreatedAtAction("GetAmizade", new { id = amizade.PessoaId }, amizade);

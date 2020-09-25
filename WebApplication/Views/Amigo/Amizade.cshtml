@@ -1,0 +1,27 @@
+﻿@model Repository.Domain.Amizade
+@{
+    ViewData["Title"] = "Amizade";
+}
+
+<h1>Fazer amizade</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Amizade">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PessoaId" class="control-label"></label>
+                <input asp-for="PessoaId" class="form-control" />
+                <span asp-validation-for="PessoaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmigoId" class="control-label"></label>
+                <input asp-for="AmigoId" class="form-control" />
+                <span asp-validation-for="AmigoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
