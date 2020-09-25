@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAPIPaises.Migrations
 {
-    public partial class dbinit : Migration
+    public partial class blabla : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,24 +28,23 @@ namespace WebAPIPaises.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(nullable: false),
                     Foto = table.Column<string>(nullable: false),
-                    PaisId = table.Column<Guid>(nullable: false),
-                    PaisId1 = table.Column<int>(nullable: true)
+                    PaisId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Estado", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Estado_Pais_PaisId1",
-                        column: x => x.PaisId1,
+                        name: "FK_Estado_Pais_PaisId",
+                        column: x => x.PaisId,
                         principalTable: "Pais",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Estado_PaisId1",
+                name: "IX_Estado_PaisId",
                 table: "Estado",
-                column: "PaisId1");
+                column: "PaisId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

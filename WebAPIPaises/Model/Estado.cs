@@ -10,7 +10,7 @@ namespace WebAPIPaises.Model
         public int Id { set; get; }
         public string Nome { set; get; }
         public string Foto { set; get; }
-        public Guid PaisId { set; get; }
+        public int PaisId { set; get; }
         public Pais Pais { set; get; }
     }
 }
